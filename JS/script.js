@@ -3,6 +3,8 @@ const generatePoke = document.getElementById("generatePoke");
 const catchContainer = document.getElementById("catchContainer");
 consolelog();
 
+
+//Event listenerar som generar en slumpmässig pokemon och en knapp för att fånga de
 generatePoke.addEventListener("click", async () => {
     const pokeData = await generateRandomPokemon();
     
