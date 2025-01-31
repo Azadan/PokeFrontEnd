@@ -164,3 +164,16 @@ function displayPokemonDetails(pokemon) {
 if (document.getElementById('pokemon-details')) {
     getPokemonDetails();
 }
+
+
+export async function deletePokemon(id) {
+
+    const response = await fetch(`${apiEndpoint}/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    console.log('Detta skickar jag till backend', response)
+    return await response.json();
+}
