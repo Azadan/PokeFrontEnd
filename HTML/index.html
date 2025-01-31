@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Startsida</title>
+    <script type="speculationrules">
+        {
+            "prerender": [
+                {
+                    "source": "list",
+                    "urls": ["./pokedex.html"]
+                }
+            ]
+        }
+    </script>
 </head>
 <body>
     <div>
@@ -12,7 +22,7 @@
 
     <nav>
         <a href="catchPokemon.html">Fånga Pokemon</a>
-        <a href="#">PokeDex</a>
+        <a href="pokedex.html">PokeDex</a>
     </nav>
     
     <div>
