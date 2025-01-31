@@ -10,6 +10,15 @@ export function consolelog() {
     console.log("Syns detta?");
 }
 
+function parseComment(commentJson) {
+    try {
+        return commentJson ? JSON.parse(commentJson).comment : '';
+    } catch (error) {
+        console.error('Error med att parsa kommentaren:', error);
+        return commentJson || '';
+    }
+}
+
 export async function generateRandomPokemon() {
     let id = Math.floor(Math.random()*1000);
     const radomPokemonRespone = await fetch(`${url}pokemon/${id}`);
@@ -114,11 +123,12 @@ export async function getYourPokemon() {
 }
 
 export function displayPokeDex(Pokedex) {
+
     pokedexContainer.innerHTML = Pokedex.map(pokemon => `
            <div class="pokemon-card">
             <img src="${pokemon.imageURL}" alt="${pokemon.name}">
             <h3>${pokemon.name.toUpperCase()}</h3>
-            ${pokemon.comments ? `<h3>${pokemon.comments}</h3>` : ''}
+            ${pokemon.comments ? `<h3>${parseComment(pokemon.comments)}</h3>` : ''}
             <a href="../HTML/pokemonDetails.html?id=${pokemon.id}" class="pokemon-details-button">Detaljer</a>
         </div>
     `).join('');
@@ -140,7 +150,6 @@ export async function getPokemonDetails() {
 }
 
 function displayPokemonDetails(pokemon) {
-    let fetchedComment = pokemon.comments ? JSON.parse(pokemon.comments).comment : "";
 
     pokemonDetails.innerHTML = `
         <div class="pokemon-detail-card">
@@ -158,7 +167,7 @@ function displayPokemonDetails(pokemon) {
                     <li>Special Defence: ${pokemon.specialDefence}</li>
                     <li>Speed: ${pokemon.speed}</li>
                 </ul>
-                ${fetchedComment ? `<p>Anteckningar: ${fetchedComment}</p>` : ''}            
+            ${pokemon.comments ? `<p>Anteckningar: ${parseComment(pokemon.comments)}</p>` : ''}
             </div>
         </div>
     `;
@@ -199,3 +208,4 @@ export async function changeComment(id, newComment) {
         throw error;
     }
 }
+
