@@ -140,6 +140,8 @@ export async function getPokemonDetails() {
 }
 
 function displayPokemonDetails(pokemon) {
+    let fetchedComment = pokemon.comments ? JSON.parse(pokemon.comments).comment : "";
+
     pokemonDetails.innerHTML = `
         <div class="pokemon-detail-card">
             <img src="${pokemon.imageURL}" alt="${pokemon.name}">
@@ -156,11 +158,44 @@ function displayPokemonDetails(pokemon) {
                     <li>Special Defence: ${pokemon.specialDefence}</li>
                     <li>Speed: ${pokemon.speed}</li>
                 </ul>
-                ${pokemon.comments ? `<p>Kommentar: ${pokemon.comments}</p>` : ''}
+                ${fetchedComment ? `<p>Anteckningar: ${fetchedComment}</p>` : ''}            
             </div>
         </div>
     `;
 }
 if (document.getElementById('pokemon-details')) {
     getPokemonDetails();
+}
+
+
+export async function deletePokemon(id) {
+
+    const response = await fetch(`${apiEndpoint}/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    console.log('Detta skickar jag till backend', response)
+    return await response.json();
+}
+
+export async function changeComment(id, newComment) {
+    console.log('Skickar kommentar:', newComment); 
+    
+    try {
+        const response = await fetch(`${apiEndpoint}/${id}/comments`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ comment: newComment })
+        });
+
+        return await response.json();
+        
+    } catch (error) {
+        console.error('Error in changeComment:', error);
+        throw error;
+    }
 }
