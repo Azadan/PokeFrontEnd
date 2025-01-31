@@ -258,7 +258,7 @@ if (document.getElementById('pokemon-details')) {
 /**
  * Tar bort en Pokémon från användarens Pokedex (backend)
  * 
- * @param {number} id - ID för Pokémon som ska tas bort
+ * @param {int} id - ID för Pokémon som ska tas bort
  * 
  * En DELETE-req skickas till backenden
  * Sedan väntas det på en bekräftelse
@@ -281,7 +281,7 @@ export async function deletePokemon(id) {
 /**
  * Uppdaterar kommentaren för en specifik Pokémon
  * 
- * @param {number} id - ID för Pokémon som ska uppdateras
+ * @param {int} id - ID för Pokémon som ska uppdateras
  * @param {string} newComment - Den nya kommentaren som ska sparas i backend
  * 
  * Först formateras kommentaren som JSON
