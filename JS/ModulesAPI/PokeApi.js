@@ -4,6 +4,7 @@ const generatePoke = document.getElementById("generatePoke");
 const pokedexContainer = document.getElementById("pokedex-container");
 const url = "https://pokeapi.co/api/v2/";
 const apiEndpoint = "http://localhost:8080/api/pokedex";
+const pokemonDetails = document.getElementById('pokemon-details');
 
 export function consolelog() {
     console.log("Syns detta?");
@@ -118,8 +119,48 @@ export function displayPokeDex(Pokedex) {
             <img src="${pokemon.imageURL}" alt="${pokemon.name}">
             <h3>${pokemon.name.toUpperCase()}</h3>
             ${pokemon.comments ? `<h3>${pokemon.comments}</h3>` : ''}
-            <a href="/pokemon/${pokemon.id}" class="pokemon-details-button">Detaljer</a>
+            <a href="../HTML/pokemonDetails.html?id=${pokemon.id}" class="pokemon-details-button">Detaljer</a>
         </div>
     `).join('');
 }
 
+export async function getPokemonDetails() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+
+    console.log(id);
+
+    const response = await fetch(`${apiEndpoint}/${id}`);
+    const pokemon = await response.json();
+
+    console.table('Hämtad data från pokemon by id', pokemon);
+
+    displayPokemonDetails(pokemon);
+
+}
+
+function displayPokemonDetails(pokemon) {
+    pokemonDetails.innerHTML = `
+        <div class="pokemon-detail-card">
+            <img src="${pokemon.imageURL}" alt="${pokemon.name}">
+            <h2>${pokemon.name.toUpperCase()}</h2>
+            <div class="stats">
+                <p>Type: ${pokemon.type}</p>
+                <p>Base Experience: ${pokemon.baseExperience}</p>
+                <h3>Stats:</h3>
+                <ul>
+                    <li>Health: ${pokemon.health}</li>
+                    <li>Attack: ${pokemon.attack}</li>
+                    <li>Defence: ${pokemon.defence}</li>
+                    <li>Special Attack: ${pokemon.specialAttack}</li>
+                    <li>Special Defence: ${pokemon.specialDefence}</li>
+                    <li>Speed: ${pokemon.speed}</li>
+                </ul>
+                ${pokemon.comments ? `<p>Kommentar: ${pokemon.comments}</p>` : ''}
+            </div>
+        </div>
+    `;
+}
+if (document.getElementById('pokemon-details')) {
+    getPokemonDetails();
+}
