@@ -1,8 +1,9 @@
 const catchContainer = document.getElementById("catchContainer");
 const randomPokeinfo = document.getElementById("randomPoke-info");
 const generatePoke = document.getElementById("generatePoke");
+const pokedexContainer = document.getElementById("pokedex-container");
 const url = "https://pokeapi.co/api/v2/";
-export const apiEndpoint = "http://localhost:8080/api/pokedex";
+const apiEndpoint = "http://localhost:8080/api/pokedex";
 
 export function consolelog() {
     console.log("Syns detta?");
@@ -101,3 +102,24 @@ export async function postCatchAPokemon(pokeData) {
         const response = await fetchCatchAPokemon(pokemonToCatch)
         return response
 }
+
+export async function getYourPokemon() {
+    const myPokemons = await fetch(apiEndpoint);
+    const Pokedex = await myPokemons.json();
+    console.table('Hämtad data från PokeDex backEnd', Pokedex);
+    displayPokeDex(Pokedex);
+    return Pokedex;
+ 
+}
+
+export function displayPokeDex(Pokedex) {
+    pokedexContainer.innerHTML = Pokedex.map(pokemon => `
+           <div class="pokemon-card">
+            <img src="${pokemon.imageURL}" alt="${pokemon.name}">
+            <h3>${pokemon.name.toUpperCase()}</h3>
+            ${pokemon.comments ? `<h3>${pokemon.comments}</h3>` : ''}
+            <a href="/pokemon/${pokemon.id}" class="pokemon-details-button">Detaljer</a>
+        </div>
+    `).join('');
+}
+
