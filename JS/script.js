@@ -1,4 +1,4 @@
-import { consolelog, generateRandomPokemon, displayGeneratedPokemon, fetchCatchAPokemon, postCatchAPokemon, apiEndpoint} from './ModulesAPI/PokeApi.js';
+import { consolelog, generateRandomPokemon, postCatchAPokemon} from './ModulesAPI/PokeApi.js';
 const generatePoke = document.getElementById("generatePoke");
 const catchContainer = document.getElementById("catchContainer");
 consolelog();
@@ -25,4 +25,3 @@ generatePoke.addEventListener("click", async () => {
         })
     } 
 })
-
