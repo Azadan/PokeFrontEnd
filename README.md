@@ -29,3 +29,14 @@ Projektet använder två API:er:
 - CSS
 - REST API (PokeAPI)
 - Egen backend-integration
+
+## Installation och Start
+
+### Förutsättningar 
+- Webbläsare (helst chrome baserat)
+- Live server via VSCode
+
+## Installation
+
+1. Klona projektet
+2. Kör det i din local host
